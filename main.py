@@ -62,8 +62,7 @@ def segmentWord(word: str) -> set:
 
 
 
-if __name__=="__main":
+if __name__=="__main__":
     runAnalyser('العربية')
-
 
 
