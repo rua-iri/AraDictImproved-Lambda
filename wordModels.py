@@ -1,3 +1,13 @@
+
+
+class SegmentedWord:    
+    def __init__(self, prefix: str, stem: str, suffix: str) -> None:
+        self.prefix: str = prefix
+        self.stem: str = stem
+        self.suffix: str = suffix
+
+
+
 class WordSolution:
     def __init__(self, phoneticSpelling, meaning, tense, root, verbForm) -> None:
         self.phoneticSpelling: str = phoneticSpelling
@@ -31,3 +41,22 @@ class WordSolution:
             + self.verbForm
             + "]"
         )
+
+
+
+class WordCombination:
+    def __init__(self, prefix, stem, suffix) -> None:
+        self.prefix:str = prefix
+        self.stem:str = stem
+        self.suffix: str = suffix
+        self.combinationSolutions: list = []
+
+    def addSolution(self, solution):
+        self.combinationSolutions = solution
+
+    def __str__(self) -> str:
+        return "Prefix: " + self.prefix + "\nStem: " + self.stem + "\nSuffix: " + self.suffix;
+        
+
+
+

@@ -1,23 +1,24 @@
-from wordSolution import WordSolution
+from wordModels import WordSolution, SegmentedWord, WordCombination
+import helpers
 
 harakatList = ["َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"]
-
-
-class SegmentedWord:
-    
-    def __init__(self, prefix: str, stem: str, suffix: str) -> None:
-        self.prefix = prefix
-        self.stem = stem
-        self.suffix = suffix
-
-
 
 
 def runAnalyser(arabicWord: str) -> list[str]:
     arabicWord = removeDiacritics(arabicWord)
     solutionsList = []
+    possibleSegments = segmentWord(arabicWord)
 
-    
+
+    # Iterate through each possible segment combination
+    for segment in possibleSegments:
+        prefix: str = segment.prefix
+        stem: str = segment.stem
+        suffix: str = segment.suffix
+
+
+        wordCombination = WordCombination(prefix=prefix, stem=stem, suffix=suffix)
+        helpers.runQuery(wordCombination=wordCombination)
 
 
 
@@ -34,10 +35,10 @@ def removeDiacritics(word: str) -> str:
 
 
 """
-Splits a word in prefix + stem + suffix combinations. 
-find all possible combinations to make up word
+Splits a word in prefix + stem + suffix combinations.
+Find all possible combinations to make up word
 """
-def segmentWord(word) -> set:
+def segmentWord(word: str) -> set:
     possibleSegments = set()
     prefixLength: int = 0
     suffixLength: int = 0
@@ -61,10 +62,8 @@ def segmentWord(word) -> set:
 
 
 
+if __name__=="__main":
+    runAnalyser('العربية')
 
 
-# testing below
-blah = WordSolution('a', 'b', 'c', 'd', 'e')
-print(blah)
-print(blah.__str__())
 
