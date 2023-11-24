@@ -19,14 +19,10 @@ def runAnalyser(arabicWord: str) -> list[str]:
         wordCombination = WordCombination(prefix=prefix, stem=stem, suffix=suffix)
         helpers.runQuery(wordCombination=wordCombination)
 
-        print(wordCombination.combinationSolutions)
-        print(type(wordCombination.combinationSolutions))
-        print(len(wordCombination.combinationSolutions))
-
         try: 
             for solution in wordCombination.combinationSolutions:
-                print(solution)
-                solutionsList.append(solution)
+                print(solution.toDict())
+                solutionsList.append(solution.toDict())
         except Exception as e:
             print(e)
         

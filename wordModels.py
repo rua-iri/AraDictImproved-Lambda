@@ -17,6 +17,7 @@ class WordSolution:
         self.root: str = root
         self.verbForm: str = verbForm
 
+
     def setTense(self, tense: str) -> str:
         trueTense = tense
         if trueTense[0] == ",":
@@ -26,6 +27,17 @@ class WordSolution:
             trueTense = trueTense[:-2]
 
         return trueTense
+    
+
+    def toDict(self) -> dict:
+        return {
+            "phoneticSpelling": self.phoneticSpelling, 
+            "meaning": self.meaning, 
+            "tense": self.tense, 
+            "root": self.root, 
+            "verbForm": self.verbForm
+            }
+
 
     def __str__(self) -> str:
         return (
