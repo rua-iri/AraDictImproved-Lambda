@@ -1,14 +1,31 @@
-from wordModels import WordSolution, SegmentedWord, WordCombination
+import json
+from wordModels import SegmentedWord, WordCombination
 import helpers
 
 harakatList = ["َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"]
+
+def lambda_handler(event, context):
+    lookupWord = event['queryStringParameters'].get('word')
+    wordMeanings = runAnalyser(lookupWord)
+
+    if(wordMeanings==[]):
+        return {
+            "statusCode": 400,
+            "body": json.dumps({
+                "error": "No Meanings Found"
+            })
+        }
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(wordMeanings)
+        }
 
 
 def runAnalyser(arabicWord: str) -> list[str]:
     arabicWord = removeDiacritics(arabicWord)
     solutionsList: list = []
     possibleSegments = segmentWord(arabicWord)
-
 
     # Iterate through each possible segment combination
     for segment in possibleSegments:
@@ -66,11 +83,5 @@ def segmentWord(word: str) -> set:
         prefixLength+=1
     
     return possibleSegments
-
-
-
-
-if __name__=="__main__":
-    runAnalyser('العربية')
 
 
