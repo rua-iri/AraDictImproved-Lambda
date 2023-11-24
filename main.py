@@ -6,7 +6,7 @@ harakatList = ["َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"]
 
 def runAnalyser(arabicWord: str) -> list[str]:
     arabicWord = removeDiacritics(arabicWord)
-    solutionsList = []
+    solutionsList: list = []
     possibleSegments = segmentWord(arabicWord)
 
 
@@ -16,9 +16,21 @@ def runAnalyser(arabicWord: str) -> list[str]:
         stem: str = segment.stem
         suffix: str = segment.suffix
 
-
         wordCombination = WordCombination(prefix=prefix, stem=stem, suffix=suffix)
         helpers.runQuery(wordCombination=wordCombination)
+
+        print(wordCombination.combinationSolutions)
+        print(type(wordCombination.combinationSolutions))
+        print(len(wordCombination.combinationSolutions))
+
+        try: 
+            for solution in wordCombination.combinationSolutions:
+                print(solution)
+                solutionsList.append(solution)
+        except Exception as e:
+            print(e)
+        
+    return solutionsList
 
 
 

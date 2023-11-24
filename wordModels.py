@@ -9,7 +9,7 @@ class SegmentedWord:
 
 
 class WordSolution:
-    def __init__(self, phoneticSpelling, meaning, tense, root, verbForm) -> None:
+    def __init__(self, phoneticSpelling: str, meaning: str, tense: str, root:str, verbForm:str) -> None:
         self.phoneticSpelling: str = phoneticSpelling
         self.meaning: str = meaning
         self.tense: str = tense
@@ -52,7 +52,7 @@ class WordCombination:
         self.combinationSolutions: list = []
 
     def addSolution(self, solution):
-        self.combinationSolutions = solution
+        self.combinationSolutions.append(solution)
 
     def __str__(self) -> str:
         return "Prefix: " + self.prefix + "\nStem: " + self.stem + "\nSuffix: " + self.suffix;
