@@ -1,7 +1,11 @@
+from cProfile import Profile
+from functools import wraps
 import json
+from pstats import SortKey, Stats
 from wordModels import SegmentedWord, WordCombination
 import helpers
 
+# harakatList = ["َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"]
 harakatList = ["َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"]
 
 def lambda_handler(event, context):
@@ -22,6 +26,21 @@ def lambda_handler(event, context):
         }
 
 
+def profile(func):
+    """Decorator to profile a function."""
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        profiler = Profile()
+        result = profiler.runcall(func, *args, **kwargs)
+        stats = Stats(profiler)
+        stats.sort_stats(SortKey.TIME)
+        stats.print_stats()
+        return result
+
+    return wrapper
+
+@profile
 def runAnalyser(arabicWord: str) -> list[str]:
     arabicWord = removeDiacritics(arabicWord)
     solutionsList: list = []
@@ -53,7 +72,7 @@ database can be queried without issue
 """
 def removeDiacritics(word: str) -> str:
     for haraka in harakatList:
-        word.replace(haraka, "")
+        word = word.replace(haraka, "")
 
     return word
 
